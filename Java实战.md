@@ -181,7 +181,13 @@ anyMatch、allMatch和noneMatch这三个操作都用到了所谓的短路;
     true
 ```
 #### Option类
+
 Optional<T>类（java.util.Optional）是一个容器类，代表一个值存在或不存在
-    
+
 #### 查找第一个元素
     
+findFirst用来查询流中的第一个元素，结果为Optional<T>, 类似于findAny
+
+### 归约
+reduce
+
