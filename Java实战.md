@@ -99,4 +99,63 @@ dropWhile操作是对takeWhile操作的补充。它会从头开始，丢弃所�
 ### 映射
 一个非常常见的数据处理套路就是从某些对象中选择信息。比如在SQL里，你可以从表中选择一列。Stream API也通过map和flatMap方法提供了类似的工具
 #### 对流中的每一个元素应用函数
+流支持map方法，它会接受一个函数作为参数。这个函数会被应用到每个元素上，并将其映射成一个新的元素，使用映射一词，是因为它和转换类似，但其中的细微差别在于它是“创建一个新版本”而不是去“修改
+```java
+    public static void main(String[] args) {
+        List<Dish> specialMenu = Arrays.asList(
+                new Dish("seasonal fruit", true, 120, Dish.Type.OTHER),
+                new Dish("prawns", false, 300, Dish.Type.FISH),
+                new Dish("rice", true, 350, Dish.Type.OTHER),
+                new Dish("chicken", false, 400, Dish.Type.MEAT),
+                new Dish("french fries", true, 530, Dish.Type.OTHER));
 
+        specialMenu.stream()
+                .map(Dish::getName)
+                .forEach(System.out::println);
+    }
+    
+    result-------------
+    seasonal fruit
+    prawns
+    rice
+    chicken
+    french fries
+    
+```
+#### 流的扁平化
+flatMap方法让你把流中的每一个值都换成另一个流，然后把所有流连接起来成为一个流
+使用flatMap方法的效果是，各个数组并不是分别映射成一个流，而是映射成流的内容。所有使用flatMap(Arrays::stream)时生成的单个流都被合并起来，即扁平化为一个流
+```java
+    public static void main(String[] args) {
+        List<Dish> specialMenu = Arrays.asList(
+                new Dish("seasonal fruit", true, 120, Dish.Type.OTHER),
+                new Dish("prawns", false, 300, Dish.Type.FISH),
+                new Dish("rice", true, 350, Dish.Type.OTHER),
+                new Dish("chicken", false, 400, Dish.Type.MEAT),
+                new Dish("french fries", true, 530, Dish.Type.OTHER));
+
+        String[] arrayOfWords = {"Goodbye", "World"};
+        Stream<String> streamDemoOfwords = Arrays.stream(arrayOfWords);
+
+        streamDemoOfwords
+                .map(str -> str.split(""))
+                .flatMap(Arrays::stream)
+                .distinct()
+                .forEach(System.out::println);
+    }
+    
+    result--------
+    G
+    o
+    d
+    b
+    y
+    e
+    W
+    r
+    l
+```
+
+### 查找和匹配
+
+另一个常见的数据处理套路是看看数据集中的某些元素是否匹配一个给定的属性。Stream API通过allMatch、anyMatch、noneMatch、findFirst和findAny方法提供了这样的工具
