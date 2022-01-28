@@ -159,3 +159,29 @@ flatMap方法让你把流中的每一个值都换成另一个流，然后把所�
 ### 查找和匹配
 
 另一个常见的数据处理套路是看看数据集中的某些元素是否匹配一个给定的属性。Stream API通过allMatch、anyMatch、noneMatch、findFirst和findAny方法提供了这样的工具
+
+anyMatch 至少匹配一个  结果boolean值，终端操作 allMatch匹配所有，也是终端操作;
+anyMatch、allMatch和noneMatch这三个操作都用到了所谓的短路;
+短路操作可以将无限流变成有限流
+
+```java
+    public static void main(String[] args) {
+        List<Dish> specialMenu = Arrays.asList(
+                new Dish("seasonal fruit", true, 120, Dish.Type.OTHER),
+                new Dish("prawns", false, 300, Dish.Type.FISH),
+                new Dish("rice", true, 350, Dish.Type.OTHER),
+                new Dish("chicken", false, 400, Dish.Type.MEAT),
+                new Dish("french fries", true, 530, Dish.Type.OTHER));
+
+        if (specialMenu.stream().anyMatch(Dish::isVegetarian)) {
+            System.out.println("is vegetarian");
+        }
+    }
+    result-------------
+    true
+```
+#### Option类
+Optional<T>类（java.util.Optional）是一个容器类，代表一个值存在或不存在
+    
+#### 查找第一个元素
+    
