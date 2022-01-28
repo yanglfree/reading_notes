@@ -24,3 +24,75 @@
 1. 一个数据源（比如集合）来执行一个查询
 2. 一个中间操作链，形成一个流的流水线
 3. 一个终端操作，执行流水线，生成结果
+
+## 使用流
+### 筛选
+* filter 筛选，接收一个判断的函数，返回符合结果的元素
+* distinct 去重，去掉重复的元素
+
+### 流的切片
+采用filter需要遍历整个流中的数据，takeWihle可以对流进行分片，并且在遭遇第一个不符合的元素时停止
+
+dropWhile操作是对takeWhile操作的补充。它会从头开始，丢弃所有谓词结果为false的元素
+```java
+    public static void main(String[] args) {
+        List<Dish> specialMenu = Arrays.asList(
+                new Dish("seasonal fruit", true, 120, Dish.Type.OTHER),
+                new Dish("prawns", false, 300, Dish.Type.FISH),
+                new Dish("rice", true, 350, Dish.Type.OTHER),
+                new Dish("chicken", false, 400, Dish.Type.MEAT),
+                new Dish("french fries", true, 530, Dish.Type.OTHER));
+
+        specialMenu.stream()
+                .takeWhile(dish -> dish.getCalories() < 320)
+                .map(dish -> dish.getName())
+                .forEach(System.out::println);
+    }
+```
+#### 截断流
+
+流支持limit(n)方法，该方法会返回另一个不超过给定长度的流。所需的长度作为参数传递给limit。如果流是有序的，则最多会返回前n个元素
+```java
+    public static void main(String[] args) {
+        List<Dish> specialMenu = Arrays.asList(
+                new Dish("seasonal fruit", true, 120, Dish.Type.OTHER),
+                new Dish("prawns", false, 300, Dish.Type.FISH),
+                new Dish("rice", true, 350, Dish.Type.OTHER),
+                new Dish("chicken", false, 400, Dish.Type.MEAT),
+                new Dish("french fries", true, 530, Dish.Type.OTHER));
+
+        specialMenu.stream()
+                .filter(dish -> dish.getCalories() < 400)
+                .limit(3)
+                .map(dish -> dish.getName())
+                .forEach(System.out::println);
+    }
+    
+    result---------------
+    seasonal fruit  
+    prawns
+    rice
+```
+
+#### 跳过元素
+流还支持skip(n)方法，返回一个扔掉了前n个元素的流。如果流中元素不足n个，则返回一个空流
+```java
+    public static void main(String[] args) {
+        List<Dish> specialMenu = Arrays.asList(
+                new Dish("seasonal fruit", true, 120, Dish.Type.OTHER),
+                new Dish("prawns", false, 300, Dish.Type.FISH),
+                new Dish("rice", true, 350, Dish.Type.OTHER),
+                new Dish("chicken", false, 400, Dish.Type.MEAT),
+                new Dish("french fries", true, 530, Dish.Type.OTHER));
+
+        specialMenu.stream()
+                .filter(dish -> dish.getCalories() < 400)
+                .skip(2)
+                .map(dish -> dish.getName())
+                .forEach(System.out::println);
+    }
+    
+    result------------
+    rice
+    
+ ```
