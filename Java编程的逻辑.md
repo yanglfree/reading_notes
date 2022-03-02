@@ -22,8 +22,12 @@ Java并发包中的原子变量有以下几种类型
 
 原子变量：包含一些以原子方式实现组合操作的方法
 
-synchronized： 乐观锁
-原子变量： 悲观锁
+synchronized： 悲观锁
+原子变量： 乐观锁
+
+#### ABA问题
+
+
 
 #### 显式锁
 
@@ -31,3 +35,5 @@ Lock，实现类ReentrantLock
 读写锁，实现类ReentrantReadWriteLock
 
 相比于synchronized，显式锁支持以非阻塞的方式获取锁、可以响应中断，可以限时。
+
+
