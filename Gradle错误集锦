@@ -1,3 +1,5 @@
+## Gradle错误集锦
+Gradle编译的过程，根据环境的不同，配置信息的不同，会出现各种各样的错误，记录一下，以便后续查找
 1. Invalid escape sequence at line 1 column 29 path $[0].name
 编译报错：Invalid escape sequence at line 1 column 29 path $[0].name
 
