@@ -1,0 +1,4 @@
+1. Invalid escape sequence at line 1 column 29 path $[0].name
+编译报错：Invalid escape sequence at line 1 column 29 path $[0].name
+
+解决：grade.properties 文件下 org.gradle.jvmargs=-Xmx1536m    替换 ：org.gradle.jvmargs=-Xmx4608m -Dfile.encoding=UTF-8
