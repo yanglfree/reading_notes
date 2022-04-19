@@ -77,6 +77,11 @@ Java并发包中的原子变量有以下几种类型
 * AtomicReference
 
 原子变量：包含一些以原子方式实现组合操作的方法
+``` java
+public final boolean compareAndSet(int expectedValue, int newValue)
+```
+比较并设置，这是原子变量的一个核心方法，简称CAS
+
 
 synchronized： 悲观锁
 原子变量： 乐观锁
